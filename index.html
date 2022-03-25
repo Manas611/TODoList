@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+    <title>To Do List</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">To Do List</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        
+      </nav>
+
+      <main class="container mt-5 col-6">
+        <div class="input-group mb-3 ">
+            <input type="text" class="form-control" id="vall" placeholder="Enter Task Name" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <button id="add_btn" class="btn btn-outline-secondary" type="button" id="button-addon2">Add</button>
+        </div>
+
+        <ul id="parentList" class="list-group">
+            <li class="list-group-item">
+              
+                <strong class="h3">Task 1</strong>
+                <button id="Editbtn" class="btn btn-warning float-right mx-2" onclick=editChapter(this)>Edit</button>
+                <button class="btn btn-danger float-right" onclick=removeChapter(this)>Remove</button>
+            </li>
+          </ul>
+    </main>
+
+    <script>
+        let addbtn=document.getElementById('add_btn');
+        let vall=document.getElementById('vall');
+        addbtn.addEventListener('click',addChapter);
+        let parentList=document.getElementById('parentList');
+        function addChapter(e)
+        {
+            if(parentList.children[0].className=="EmptyList"){
+                parentList.children[0].remove()
+            }
+            let currentBtn=e.currentTarget;
+            let currentText=currentBtn.previousElementSibling;
+
+            let newLi=document.createElement('li');
+            newLi.classList.add("list-group-item")
+            newLi.innerHTML=`<strong class="h3">${currentText.value}</strong>
+            <button id="Editbtn" class="btn btn-warning float-right mx-2" onclick=editChapter(this)>Edit</button>
+                <button class="btn btn-danger float-right" onclick=removeChapter(this)>Remove</button>`
+
+            parentList.appendChild(newLi)
+            vall.value=""
+
+        }
+
+        function removeChapter(e)
+        {
+            e.parentElement.remove()
+            let parentList=document.getElementById('parentList');
+            if(parentList.children.length<=0){
+                let mess=document.createElement('h3')
+                mess.classList.add('EmptyList')
+                mess.textContent="Nothing Is In The List Please Add Some Content!!";
+                parentList.appendChild(mess)
+            }  
+        }
+
+        function editChapter(e)
+        {
+            let Editbtn=document.getElementById('Editbtn');
+            let val=prompt("",'value');
+            e.previousElementSibling.textContent=val;
+
+        }
+    </script>
+</body>
+</html>
